@@ -24,7 +24,6 @@ public class HumanGame {
         // TODO: Implementation
         // generate random number based on a seed
         System.out.println("Type an arbitrary number");
-        System.out.print(">");
 
         long seed = sc.nextLong();
         randomGenerator = new Random(seed);
@@ -34,21 +33,19 @@ public class HumanGame {
         // game starts
         System.out.println("Start guessing!");
         for (int i = 0; i < 7; i++) {
-            System.out.print(">");
+            numberOfGuesses++;
 
             // store the guessed number into an array
             guesses[i] = sc.nextInt();
 
             // correct guess
             if (guesses[i] == n) {
-                numberOfGuesses = i + 1;
                 System.out.println("Good guess! You won.");
-                System.out.println(numberOfGuesses + " guesses");
                 break;
-                // guess too low
+            // guess too low
             } else if (guesses[i] < n) {
                 System.out.println("higher");
-                // guess too high
+            // guess too high
             } else if (guesses[i] > n) {
                 System.out.println("lower");
             }
@@ -58,6 +55,8 @@ public class HumanGame {
             }
         }
 
+        System.out.println(numberOfGuesses + " guesses:");
+
         // array of dots for guess history
         Character[] dots = new Character[100];
         Arrays.fill(dots, '.');
@@ -65,8 +64,8 @@ public class HumanGame {
         // guess history
         for (int i = 0; i < numberOfGuesses; i++) {
             // mark number to guess and the guessed number
-            dots[n - 1] = '|';
-            dots[guesses[i] - 1] = 'X';
+            dots[n] = '|';
+            dots[guesses[i]] = 'X';
 
             // print full array of a guess
             for (int j = 0; j < 100; j++) {
@@ -74,7 +73,7 @@ public class HumanGame {
             }
 
             // clear "X" from array of dots
-            dots[guesses[i] - 1] = '.';
+            dots[guesses[i]] = '.';
             System.out.println();
         }
         // END TODO
