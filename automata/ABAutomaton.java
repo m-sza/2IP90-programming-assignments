@@ -19,7 +19,7 @@ class ABAutomaton {
     String genToString(boolean[] gen) {
         // TODO 5
         String currentGen = "";
-        for (int i = 0; i < gen.length; i++) {
+        for (int i = 1; i < (gen.length - 1); i++) {
             if (gen[i]) {
                 currentGen = currentGen + "*";
             } else {
@@ -34,7 +34,23 @@ class ABAutomaton {
      */
     boolean[] nextGenA(boolean[] gen) {
         // TODO 7
-        return new boolean[] { true, false };
+        boolean[] nextGenA = new boolean[gen.length];
+        for (int i = 1; i < (gen.length - 1); i++) {
+            if (gen[i]) {
+                if ((gen[i - 1] && gen[i + 1]) || (!gen[i - 1] && !gen[i + 1])) {
+                    nextGenA[i] = false;
+                } else {
+                    nextGenA[i] = true;
+                }
+            } else {
+                if (!gen[i - 1] && !gen[i + 1]) {
+                    nextGenA[i] = false;
+                } else {
+                    nextGenA[i] = true;
+                }
+            }
+        }
+        return nextGenA;
     }
 
     /**
@@ -42,7 +58,23 @@ class ABAutomaton {
      */
     boolean[] nextGenB(boolean[] gen) {
         // TODO 9
-        return new boolean[] { true, false };
+        boolean[] nextGenB = new boolean[gen.length];
+        for (int i = 1; i < (gen.length - 1); i++) {
+            if (gen[i]) {
+                if (!gen[i + 1]) {
+                    nextGenB[i] = true;
+                } else {
+                    nextGenB[i] = false;
+                }
+            } else {
+                if ((gen[i - 1] && gen[i + 1]) || (!gen[i - 1] && !gen[i + 1])) {
+                    nextGenB[i] = false;
+                } else {
+                    nextGenB[i] = true;
+                }
+            }
+        }
+        return nextGenB;
     }
 
     /**
@@ -50,18 +82,19 @@ class ABAutomaton {
      */
     boolean[] readInitalGeneration(int length) {
         // TODO 11
-        boolean[] firstgen = new boolean[length];
+        boolean[] firstgen = new boolean[length + 2];
         String scannedItem = "";
         int locationOfCell = 0;
         if (scanner.next().equals("init_start")) {
             scannedItem = scanner.next();
             while (!scannedItem.equals("init_end")) {
                 locationOfCell = Integer.parseInt(scannedItem);
-                firstgen[locationOfCell - 1] = true;
+                if (locationOfCell <= length) {
+                    firstgen[locationOfCell] = true;
+                }
                 scannedItem = scanner.next();
             }
         }
-        // firstgen[scanner.nextInt() - 1] = true;
         return firstgen;
     }
 
