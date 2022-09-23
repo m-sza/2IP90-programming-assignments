@@ -20,6 +20,7 @@ class ABAutomaton {
         // TODO 5
         String currentGen = "";
         for (int i = 1; i < (gen.length - 1); i++) {
+            // If the cell is true, it prints a * and otherwise a regular space
             if (gen[i]) {
                 currentGen = currentGen + "*";
             } else {
@@ -36,12 +37,14 @@ class ABAutomaton {
         // TODO 7
         boolean[] nextGenA = new boolean[gen.length];
         for (int i = 1; i < (gen.length - 1); i++) {
+            // If a cell is true, checks whether its neighbours are both true or both false
             if (gen[i]) {
                 if ((gen[i - 1] && gen[i + 1]) || (!gen[i - 1] && !gen[i + 1])) {
                     nextGenA[i] = false;
                 } else {
                     nextGenA[i] = true;
                 }
+            // If a cell is false, checks whether both neighbours are empty
             } else {
                 if (!gen[i - 1] && !gen[i + 1]) {
                     nextGenA[i] = false;
@@ -60,12 +63,14 @@ class ABAutomaton {
         // TODO 9
         boolean[] nextGenB = new boolean[gen.length];
         for (int i = 1; i < (gen.length - 1); i++) {
+            // If a cell is true, checks whether the right neighbour is false
             if (gen[i]) {
                 if (!gen[i + 1]) {
                     nextGenB[i] = true;
                 } else {
                     nextGenB[i] = false;
                 }
+            // If a cell is false, checks whether both neighbors are true or both are false
             } else {
                 if ((gen[i - 1] && gen[i + 1]) || (!gen[i - 1] && !gen[i + 1])) {
                     nextGenB[i] = false;
@@ -82,13 +87,20 @@ class ABAutomaton {
      */
     boolean[] readInitalGeneration(int length) {
         // TODO 11
+
+        // Declaring variables to be used in the method
         boolean[] firstgen = new boolean[length + 2];
         String scannedItem = "";
         int locationOfCell = 0;
+
+        // Starts the scanning process for declaring the first gen by the user
         if (scanner.next().equals("init_start")) {
             scannedItem = scanner.next();
+            // As long as the user doesn't stop the defining of the cells, this loops
             while (!scannedItem.equals("init_end")) {
                 locationOfCell = Integer.parseInt(scannedItem);
+                // Checks whether the given integer is within the length of the 
+                // generation and ignores it otherwise
                 if (locationOfCell <= length) {
                     firstgen[locationOfCell] = true;
                 }
