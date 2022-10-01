@@ -6,45 +6,104 @@
  *
  * TODO: Fill in your names and student IDs
  * 
- * @author NAME
+ * @Matyas Szabolcs
  * @id ID
- * @author NAME
+ * @Quinn Caris
  * @id ID
  */
 class SudokuSolver {
+
     // Size of the grid.
-    static final int SUDOKU_SIZE = 9;           
+    static final int SUDOKU_SIZE = 9;
     // Minimum digit to be filled in.
-    static final int SUDOKU_MIN_NUMBER = 1;     
+    static final int SUDOKU_MIN_NUMBER = 1;
     // Maximum digit to be filled in.
-    static final int SUDOKU_MAX_NUMBER = 9;     
+    static final int SUDOKU_MAX_NUMBER = 9;
     // Dimension of the boxes, i.e., the sub-grids that should contain all digits.
-    static final int SUDOKU_BOX_DIMENSION = 3;  
-    
+    static final int SUDOKU_BOX_DIMENSION = 3;
+
     // The puzzle grid; 0 represents empty.
-    // This particular grid has exactly one solution. 
+    // This particular grid has exactly one solution.
     // Other grids might have multiple solutions.
-    int[][] grid = new int[][] {
-        {0, 9, 0, 7, 3, 0, 4, 0, 0},
-        {0, 0, 0, 0, 0, 0, 5, 0, 0},
-        {3, 0, 0, 0, 0, 6, 0, 0, 0},
-        {0, 0, 0, 0, 0, 2, 6, 4, 0},
-        {0, 0, 0, 6, 5, 1, 0, 0, 0},
-        {0, 0, 6, 9, 0, 7, 0, 0, 0},
-        {5, 8, 0, 0, 0, 0, 0, 0, 0},
-        {9, 0, 0, 0, 0, 3, 0, 2, 5},
-        {6, 0, 3, 0, 0, 0, 8, 0, 0},
+    static int[][] grid = new int[][] {
+            { 0, 9, 0, 7, 3, 0, 4, 0, 0 },
+            { 0, 0, 0, 0, 0, 0, 5, 0, 0 },
+            { 3, 0, 0, 0, 0, 6, 0, 0, 0 },
+            { 0, 0, 0, 0, 0, 2, 6, 4, 0 },
+            { 0, 0, 0, 6, 5, 1, 0, 0, 0 },
+            { 0, 0, 6, 9, 0, 7, 0, 0, 0 },
+            { 5, 8, 0, 0, 0, 0, 0, 0, 0 },
+            { 9, 0, 0, 0, 0, 3, 0, 2, 5 },
+            { 6, 0, 3, 0, 0, 0, 8, 0, 0 },
     };
-    
+
     // Solution counter
-    int solutionCounter = 0; 
+    int solutionCounter = 0;
+
     /**
      * Prints this Sudoku.
      */
-    void print() {
+    static void print() {
         // TODO 1
+        for (int i = 0; i < SUDOKU_SIZE; i++) {
+            // horizontal lines
+            if ((i + 3) % 3 == 0) {
+                System.out.println("+-----------------+");
+            }
+            for (int j = 0; j < SUDOKU_SIZE; j++) {
+                // vertical lines
+                if ((j + 3) % 3 == 0) {
+                    System.out.print("|");
+                } else {
+                    if (i == 4 && j == 1) {
+                        System.out.print(">");
+                    }
+                    // please ignore this lol
+                    else if (i == 2 && j == 2) {
+                        System.out.print(">");
+                    } else if (i == 4 && j == 2) {
+                        System.out.print("<");
+                    } else if (i == 1 && j == 4) {
+                        System.out.print(">");
+                    } else if (i == 1 && j == 5) {
+                        System.out.print("<");
+                    } else if (i == 2 && j == 7) {
+                        System.out.print("<");
+                    } else if (i == 4 && j == 4) {
+                        System.out.print(">");
+                    } else if (i == 4 && j == 5) {
+                        System.out.print("<");
+                    } else if (i == 4 && j == 7) {
+                        System.out.print(">");
+                    } else if (i == 4 && j == 8) {
+                        System.out.print("<");
+                    } else if (i == 6 && j == 2) {
+                        System.out.print(">");
+                    } else if (i == 6 && j == 7) {
+                        System.out.print("<");
+                    } else if (i == 7 && j == 4) {
+                        System.out.print(">");
+                    } else if (i == 7 && j == 5) {
+                        System.out.print("<");
+                    } else {
+                        System.out.print(" ");
+                    }
+                }
+                // number
+                if (grid[i][j] != 0) {
+                    System.out.print(grid[i][j]);
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            // last vertical line
+            System.out.print("|");
+            System.out.println("");
+        }
+        // last horizontal line
+        System.out.println("+-----------------+");
     }
-    
+
     /**
      * Determine if there's a conflic when we fill in d at position (r, c).
      * 
@@ -55,19 +114,30 @@ class SudokuSolver {
      */
     boolean givesConflict(int r, int c, int d) {
         // TODO 2
-        return true;
+        if (!boxConflict(r, c, d) && !rowConflict(r, d) && !colConflict(c, d)) {
+            return false;
+        } else {
+            return true;
+        }
     }
+
     /**
      * Determine if there's a conflict when we fill in d in row r.
      * 
      * @param r row index
      * @param d value
-     * @return true if there's a conflict, false otherwise 
+     * @return true if there's a conflict, false otherwise
      */
     boolean rowConflict(int r, int d) {
         // TODO 2
-        return true;
+        for (int i = 0; i < SUDOKU_SIZE; i++) {
+            if (grid[r][i] == d) {
+                return true;
+            }
+        }
+        return false;
     }
+
     /**
      * Determine if there's a conflict when we fill d in column c.
      * 
@@ -77,8 +147,14 @@ class SudokuSolver {
      */
     boolean colConflict(int c, int d) {
         // TODO 2
-        return true;
+        for (int i = 0; i < SUDOKU_SIZE; i++) {
+            if (grid[i][c] == d) {
+                return true;
+            }
+        }
+        return false;
     }
+
     /**
      * Determine if there's a conflict when we fill d in box at (r, c).
      * 
@@ -89,20 +165,30 @@ class SudokuSolver {
      */
     boolean boxConflict(int r, int c, int d) {
         // TODO 2
-        return true;
+        for (int row = r - r % 3; row < r - r % 3 + 3; row++) {
+            for (int col = c - c % 3; col < c - c % 3 + 3; col++) {
+                // System.out.println(" " + grid[row][col]);
+                if (grid[row][col] == d) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
+
     /**
      * Determine if there's a conflict in the asterisk when we fill in d.
      * 
      * @param row row index
      * @param col col index
-     * @param d value
+     * @param d   value
      * @return true if there's a conflict, false otherwise
      */
     boolean asteriskConflict(int row, int col, int d) {
         // TODO 2
         return true;
     }
+
     /**
      * Find the next empty square in "reading order".
      * 
@@ -110,8 +196,9 @@ class SudokuSolver {
      */
     int[] findEmptySquare() {
         // TODO 3
-        return new int[] {-1, -1};
+        return new int[] { -1, -1 };
     }
+
     /**
      * Determine if sudoku is filled in completely or not.
      * 
@@ -120,6 +207,7 @@ class SudokuSolver {
     boolean filledSudoku() {
         return true;
     }
+
     /**
      * Find all solutions for the grid.
      * 
@@ -128,13 +216,18 @@ class SudokuSolver {
     void solve() {
         // TODO 4
     }
+
     /**
      * Run the solver and output the results.
      */
     void solveIt() {
         // TODO 5
+        System.out.println(givesConflict(8, 8, 2));
     }
+
     public static void main(String[] args) {
+
+        print();
         (new SudokuSolver()).solveIt();
     }
 }
