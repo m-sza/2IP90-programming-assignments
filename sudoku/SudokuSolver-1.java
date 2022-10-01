@@ -1,3 +1,4 @@
+
 /**
  * Asterisk Sudoku solver.
  * 
@@ -11,6 +12,9 @@
  * @Quinn Caris
  * @id ID
  */
+
+import java.util.Arrays;
+
 class SudokuSolver {
 
     // Size of the grid.
@@ -114,7 +118,7 @@ class SudokuSolver {
      */
     boolean givesConflict(int r, int c, int d) {
         // TODO 2
-        if (!boxConflict(r, c, d) && !rowConflict(r, d) && !colConflict(c, d)) {
+        if (!rowConflict(r, d) && !colConflict(c, d) && !boxConflict(r, c, d) && !asteriskConflict(r, c, d)) {
             return false;
         } else {
             return true;
@@ -186,7 +190,17 @@ class SudokuSolver {
      */
     boolean asteriskConflict(int row, int col, int d) {
         // TODO 2
-        return true;
+        Integer[][] a = { { 2, 2 }, { 1, 4 }, { 2, 6 }, { 4, 1 }, { 4, 4 }, { 4, 7 }, { 6, 2 }, { 7, 4 }, { 6, 6 } };
+        for (int i = 0; i < 9; i++) {
+            if (row == a[i][0] && col == a[i][1]) {
+                for (int j = 0; j < 9; j++) {
+                    if (d == grid[a[j][0]][a[j][1]]) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -222,7 +236,7 @@ class SudokuSolver {
      */
     void solveIt() {
         // TODO 5
-        System.out.println(givesConflict(8, 8, 2));
+        System.out.println(givesConflict(2, 2, 5));
     }
 
     public static void main(String[] args) {
