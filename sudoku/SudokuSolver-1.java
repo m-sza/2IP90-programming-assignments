@@ -278,15 +278,16 @@ class SudokuSolver {
         }
         // SOLVE
         int[] solutions = new int[count];
-        // fill solutions with 1s
+        // fill solutions with 0s
         for (int i = 0; i < count; i++) {
-            solutions[i] = 1;
+            solutions[i] = 0;
         }
 
         // System.out.println(givesConflict(0, 5, 2));
         boolean tryingSameNum = false;
         // get solutions
         for (int i = 0; i < 15; i++) {
+            solutions[i]++;
             if (tryingSameNum == false) {
                 System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1]
                         + ") -------------------------------------------");
@@ -299,12 +300,12 @@ class SudokuSolver {
                 tryingSameNum = false;
             } else {
                 if (solutions[i] != 9) {
-                    solutions[i]++;
                     // grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
                     i -= 1;
                     System.out.print(" - wrong \t trying again");
                     tryingSameNum = true;
                 } else {
+                    solutions[i] = 0;
                     i -= 2;
                     System.out.print(" - wrong \t going back");
                     tryingSameNum = false;
@@ -313,13 +314,9 @@ class SudokuSolver {
 
             // System.out.print("\033[H\033[2J");
             // print();
-            try {
-                Thread.sleep(250);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
+            try {Thread.sleep(250);} catch (InterruptedException e) {System.out.println(e);}
         }
-
+        print();
     }
 
     /**
