@@ -286,11 +286,10 @@ class SudokuSolver {
         // System.out.println(givesConflict(0, 5, 2));
         boolean tryingSameNum = false;
         // get solutions
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < emptyGrid.length; i++) {
             solutions[i]++;
             if (tryingSameNum == false) {
-                System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1]
-                        + ") -------------------------------------------");
+                System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ") -------------------------------------------");
             }
             System.out.print("\n\ttrying " + solutions[i]);
 
@@ -299,7 +298,7 @@ class SudokuSolver {
                 System.out.print(" - success \t moving on");
                 tryingSameNum = false;
             } else {
-                if (solutions[i] != 9) {
+                if (solutions[i] < 9) {
                     // grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
                     i -= 1;
                     System.out.print(" - wrong \t trying again");
