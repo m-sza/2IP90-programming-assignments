@@ -192,7 +192,7 @@ class SudokuSolver {
      */
     boolean asteriskConflict(int row, int col, int d) {
         // TODO 2
-        // asterisk
+        // asterisk squares
         Integer[][] a = { { 2, 2 }, { 1, 4 }, { 2, 6 }, { 4, 1 }, { 4, 4 }, { 4, 7 }, { 6, 2 }, { 7, 4 }, { 6, 6 } };
         // check if current square is an asterisk square
         for (int i = 0; i < 9; i++) {
@@ -213,11 +213,12 @@ class SudokuSolver {
      * 
      * @return coordinates of the next empty square
      */
-    int[] lastSquare = { 0, 0 };
+    int[] lastSquare = { -1, 0 };
 
     int[] findEmptySquare() {
         // TODO 3
         while (lastSquare[0] != 8 || lastSquare[1] != 8) {
+            // line break
             if (lastSquare[0] == 8) {
                 if (lastSquare[1] != 8) {
                     lastSquare[0] = 0;
@@ -226,6 +227,7 @@ class SudokuSolver {
                     return null;
                 }
             } else {
+                // move to the right if not at the end of line
                 lastSquare[0] += 1;
             }
 
@@ -253,51 +255,71 @@ class SudokuSolver {
      */
     void solve() {
         // TODO 4
-        // count empty gid
+        // count empty spaces
         int count = 0;
         while (true) {
             if (findEmptySquare() != null) {
                 count++;
             } else {
-                lastSquare[0] = 0;
+                lastSquare[0] = -1;
                 lastSquare[1] = 0;
                 break;
             }
         }
         // get empty squares
-        int[][] emptySquares = new int[count][2];
+        int[][] emptyGrid = new int[count][2];
         for (int i = 0; i < 81; i++) {
             int[] current = findEmptySquare();
             if (current != null) {
-                emptySquares[i][0] = current[0];
-                emptySquares[i][1] = current[1];
+                emptyGrid[i][0] = current[0];
+                emptyGrid[i][1] = current[1];
             } else {
                 break;
             }
         }
         // SOLVE
-        int[] gridToSolve = new int[count];
-        // fill gridToSolve with 1s
+        int[] solutions = new int[count];
+        // fill solutions with 1s
         for (int i = 0; i < count; i++) {
-            gridToSolve[i] = 1;
+            solutions[i] = 1;
         }
+
+        // System.out.println(givesConflict(0, 5, 2));
+        boolean tryingSameNum = false;
         // get solutions
-        for (int i = 0; i < count; i++) {
-            for (int j = gridToSolve[i]; j < 10; j++) {
-                if (!givesConflict(emptySquares[i][0], emptySquares[i][1], j)) {
-                    gridToSolve[i] = j;
-                    grid[emptySquares[i][1]][emptySquares[i][0]] = gridToSolve[i];
-                    break;
-                    // j = 10; //break out of loop
-                }
-                // if no solution, go back 1 step
-                if (j == 9) {
+        for (int i = 0; i < 15; i++) {
+            System.out.print("(" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ")");
+            System.out.print("\t" + solutions[i]);
+            if (tryingSameNum == false) {
+                System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ") -------------------------------------------");
+            }
+            System.out.print("\n\ttrying " + solutions[i]);
+
+            if (!givesConflict(emptyGrid[i][0], emptyGrid[i][1], solutions[i])) {
+                grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
+                System.out.print(" - success \t moving on to ");
+                tryingSameNum = false;
+            } else {
+                if (solutions[i] != 9) {
+                    solutions[i]++;
+                    // grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
+                    i -= 1;
+                    System.out.print(" - wrong \t trying again at ");
+                    tryingSameNum = true;
+                } else {
                     i -= 2;
-                    j = 10;
+                    System.out.print(" - wrong \t going back to ");
+                    tryingSameNum = true;
                 }
             }
-            print();
 
+            // System.out.print("\033[H\033[2J");
+            // print();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
         }
 
     }
