@@ -61,11 +61,10 @@ class SudokuSolver {
                 if ((j + 3) % 3 == 0) {
                     System.out.print("|");
                 } else {
+                    // please ignore this lol
                     if (i == 4 && j == 1) {
                         System.out.print(">");
-                    }
-                    // please ignore this lol
-                    else if (i == 2 && j == 2) {
+                    } else if (i == 2 && j == 2) {
                         System.out.print(">");
                     } else if (i == 4 && j == 2) {
                         System.out.print("<");
@@ -288,35 +287,34 @@ class SudokuSolver {
         boolean tryingSameNum = false;
         // get solutions
         for (int i = 0; i < 15; i++) {
-            System.out.print("(" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ")");
-            System.out.print("\t" + solutions[i]);
             if (tryingSameNum == false) {
-                System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ") -------------------------------------------");
+                System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1]
+                        + ") -------------------------------------------");
             }
             System.out.print("\n\ttrying " + solutions[i]);
 
             if (!givesConflict(emptyGrid[i][0], emptyGrid[i][1], solutions[i])) {
                 grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
-                System.out.print(" - success \t moving on to ");
+                System.out.print(" - success \t moving on");
                 tryingSameNum = false;
             } else {
                 if (solutions[i] != 9) {
                     solutions[i]++;
                     // grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
                     i -= 1;
-                    System.out.print(" - wrong \t trying again at ");
+                    System.out.print(" - wrong \t trying again");
                     tryingSameNum = true;
                 } else {
                     i -= 2;
-                    System.out.print(" - wrong \t going back to ");
-                    tryingSameNum = true;
+                    System.out.print(" - wrong \t going back");
+                    tryingSameNum = false;
                 }
             }
 
             // System.out.print("\033[H\033[2J");
             // print();
             try {
-                Thread.sleep(500);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 System.out.println(e);
             }

@@ -1,0 +1,31 @@
+checking (0,0) -------------------------------------------
+        trying 1 - success       moving on to (2,0)
+checking (2,0) -------------------------------------------
+        trying 1 - wrong         trying again at (2,0)
+        trying 2 - success       moving on to (5,0)
+checking (5,0) -------------------------------------------
+        trying 1 - wrong         trying again at (5,0)
+        trying 2 - wrong         trying again at (5,0)
+        trying 2 - wrong         trying again at (5,0)
+        trying 4 - wrong         trying again at (5,0)
+        trying 5 - success       moving on to (7,0)
+checking (7,0) -------------------------------------------
+        trying 1 - wrong         trying again at (7,0)
+        trying 2 - wrong         trying again at (7,0)
+        trying 3 - wrong         trying again at (7,0)
+        trying 4 - wrong         trying again at (7,0)
+        trying 5 - wrong         trying again at (7,0)
+        trying 6 - success       moving on to (8,0)
+checking (8,0) -------------------------------------------
+        trying 1 - wrong         trying again at (8,0)
+        trying 2 - wrong         trying again at (8,0)
+        trying 3 - wrong         trying again at (8,0)
+        trying 4 - wrong         trying again at (8,0)
+        trying 5 - wrong         trying again at (8,0)
+        trying 6 - wrong         trying again at (8,0)
+        trying 7 - wrong         trying again at (8,0)
+        trying 8 - success       moving on to (0,1)
+checking (0,1) -------------------------------------------
+        trying 1 - wrong         trying again at (0,1)
+        trying 2 - wrong         trying again at (0,1)
+        trying 3 - wrong         trying again at (0,1)
