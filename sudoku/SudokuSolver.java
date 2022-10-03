@@ -257,7 +257,18 @@ class SudokuSolver {
      * 
      * Stores the final solution.
      */
-    boolean solve(int[][] grid) {
+    void solve() {
+        if (solveRecursive(grid)) {
+            print();
+        } else {
+            System.out.println("0");
+        }
+    }
+
+    /**
+     * Uses a recursive backtracking method to fill up the grid with non-conflicting values.
+     */
+    boolean solveRecursive(int[][] grid) {
         // TODO 4
 
         // stores the cell that is empty
@@ -277,7 +288,7 @@ class SudokuSolver {
             if (!givesConflict(r, c, d)) {
                 // stores the non-conflicting value in the grid to check for conflicts later
                 grid[r][c] = d;
-                if (solve(grid)) {
+                if (solveRecursive(grid)) {
                     return true;
                 } else {
                     // if the called solve function returns false 
@@ -297,11 +308,7 @@ class SudokuSolver {
      */
     void solveIt() {
         // TODO 5
-        if (solve(grid)) {
-            print();
-        } else {
-            System.out.println("This asterisk sudoku doesn't have any solutions.");
-        }
+        solve();
     }
 
     public static void main(String[] args) {
