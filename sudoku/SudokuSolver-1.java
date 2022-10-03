@@ -120,11 +120,7 @@ class SudokuSolver {
      */
     boolean givesConflict(int r, int c, int d) {
         // TODO 2
-        if (!rowConflict(r, d) && !colConflict(c, d) && !boxConflict(r, c, d) && !asteriskConflict(r, c, d)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(!rowConflict(r, d) && !colConflict(c, d) && !boxConflict(r, c, d) && !asteriskConflict(r, c, d));
     }
 
     /**
@@ -283,37 +279,40 @@ class SudokuSolver {
             solutions[i] = 0;
         }
 
-        // System.out.println(givesConflict(0, 5, 2));
         boolean tryingSameNum = false;
         // get solutions
-        for (int i = 0; i < emptyGrid.length; i++) {
+        for (int i = 0; i < 5; i++) {
             solutions[i]++;
             if (tryingSameNum == false) {
                 System.out.print("\nchecking" + " (" + emptyGrid[i][0] + "," + emptyGrid[i][1] + ") -------------------------------------------");
             }
             System.out.print("\n\ttrying " + solutions[i]);
-
             if (!givesConflict(emptyGrid[i][0], emptyGrid[i][1], solutions[i])) {
                 grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
-                System.out.print(" - success \t moving on");
+                System.out.print(" - success\tmoving on");
                 tryingSameNum = false;
             } else {
                 if (solutions[i] < 9) {
                     // grid[emptyGrid[i][1]][emptyGrid[i][0]] = solutions[i];
                     i -= 1;
-                    System.out.print(" - wrong \t trying again");
+                    System.out.print(" - wrong\ttrying again");
                     tryingSameNum = true;
                 } else {
                     solutions[i] = 0;
                     i -= 2;
-                    System.out.print(" - wrong \t going back");
+                    System.out.print(" - wrong\tgoing back");
                     tryingSameNum = false;
                 }
             }
+            print();
 
             // System.out.print("\033[H\033[2J");
             // print();
-            try {Thread.sleep(250);} catch (InterruptedException e) {System.out.println(e);}
+            try {
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
         }
         print();
     }
