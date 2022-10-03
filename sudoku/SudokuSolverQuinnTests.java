@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit;
+import javax.imageio.plugins.tiff.ExifParentTIFFTagSet;
 
 /**
  * Asterisk Sudoku solver.
@@ -13,9 +15,6 @@
  * @id 1779133
  */
 
-import java.util.concurrent.TimeUnit;
-
-import javax.imageio.plugins.tiff.ExifParentTIFFTagSet;
 
 class SudokuSolverQuinnTests {
 
@@ -120,11 +119,14 @@ class SudokuSolverQuinnTests {
      */
     boolean givesConflict(int r, int c, int d) {
         // TODO 2
-        if (!rowConflict(r, d) && !colConflict(c, d) && !boxConflict(r, c, d) && !asteriskConflict(r, c, d)) {
-            return false;
-        } else {
-            return true;
-        }
+        // if (!rowConflict(r, d) && !colConflict(c, d) 
+        // && !boxConflict(r, c, d) && !asteriskConflict(r, c, d)) {
+        //     return false;
+        // } else {
+        //     return true;
+        // }
+        return !(!rowConflict(r, d) && !colConflict(c, d) 
+            && !boxConflict(r, c, d) && !asteriskConflict(r, c, d));
     }
 
     /**
@@ -192,7 +194,9 @@ class SudokuSolverQuinnTests {
     boolean asteriskConflict(int row, int col, int d) {
         // TODO 2
         // asterisk squares
-        Integer[][] a = { { 2, 2 }, { 1, 4 }, { 2, 6 }, { 4, 1 }, { 4, 4 }, { 4, 7 }, { 6, 2 }, { 7, 4 }, { 6, 6 } };
+        Integer[][] a = { { 2, 2 }, { 1, 4 }, { 2, 6 }, 
+            { 4, 1 }, { 4, 4 }, { 4, 7 }, 
+            { 6, 2 }, { 7, 4 }, { 6, 6 } };
         // check if current square is an asterisk square
         for (int i = 0; i < 9; i++) {
             if (row == a[i][0] && col == a[i][1]) {
@@ -207,13 +211,14 @@ class SudokuSolverQuinnTests {
         return false;
     }
 
+    
+    int[] lastSquare = { 0, 0 };
+
     /**
      * Find the next empty square in "reading order".
      * 
      * @return coordinates of the next empty square
      */
-    int[] lastSquare = { 0, 0 };
-
     int[] findEmptySquare() {
         // TODO 3
         while (lastSquare[0] != 8 || lastSquare[1] != 8) {
@@ -248,57 +253,81 @@ class SudokuSolverQuinnTests {
     }
 
     /**
+     * Counts the amount of empty cells in the given sudoku.
+     */
+    int countEmpty() {
+        int count = 0;
+        while (true) {
+            if (findEmptySquare() != null) {
+                count++;
+            } else {
+                count++;
+                lastSquare[0] = -1;
+                lastSquare[1] = 0;
+                break;
+            }
+        }
+        return count;
+    }
+
+    int[][][] triedOut = new int[9][9][10];
+    int[][] emptyGrid = new int[countEmpty()][3];
+    int rowEmpty = 0;
+    boolean foundIt = false;
+
+    /**
      * Find all solutions for the grid.
      * 
      * Stores the final solution.
      */
-    int[][][] triedOut = new int[9][9][10];
-
     void solve(int r, int c) {
         // TODO 4
-        boolean foundIt = false;
         for (int d = 1; d < 10; d++) {
-            if (!givesConflict(r, c, d)) {
-                if (d != triedOut[r][c][d]) {
-                    System.out.println(d);
-                    for (int i = 0; i < 10; i++) {
-                        System.out.println(triedOut[r][c][i]);
-                    }
-                    grid[r][c] = d;
-                    triedOut[r][c][d] = grid[r][c];
-                    foundIt = true;
-                    break;
+            if (!givesConflict(r, c, d) && d != triedOut[r][c][d]) {
+                for (int i = 0; i < 10; i++) {
+                    System.out.print(triedOut[r][c][i]);
                 }
+                grid[r][c] = d;
+                triedOut[r][c][d] = d;
+                emptyGrid[r][2] = d;
+                foundIt = true;
+                break;
+            } else {
+                triedOut[r][c][d] = d;
             }
         }
         
         if (foundIt) {
-            System.out.println("found " + grid[r][c] + " for (" + r + ", " + c + ")");
-            int[] current = findEmptySquare();
-            if (current != null) {
-                c = current[0];
-                r = current[1];
-                solve(r, c);
-            } 
+            System.out.println(" found " + grid[r][c] + " for (" + r + ", " + c + ")");
+            rowEmpty++;
+            r = emptyGrid[rowEmpty][0];
+            c = emptyGrid[rowEmpty][1];
+            System.out.println("new coors are (" + r + ", " + c + ")");
+            foundIt = false;
         } else {
-            System.out.println("didn't find value for (" + r + ", " + c + ")");
-            for (int i = 0; i < 9; i++) {
+            System.out.println("\ndidn't find value for (" + r + ", " + c + "), see triedOut");
+            for (int i = 0; i < 10; i++) {
+                System.out.print(triedOut[r][c][i]);
+            }
+            for (int i = 0; i < 10; i++) {
                 triedOut[r][c][i] = 0;
             }
+            rowEmpty--;
             grid[r][c] = 0;
-            if (c != 0) {
-                c--;
-                lastSquare[0] = lastSquare[0] - 1;
-            } else {
-                c = 8;
-                r--;
-                lastSquare[0] = 8;
-                lastSquare[1] = lastSquare[1] - 1;
-            }
-            solve(r, c);
+            r = emptyGrid[rowEmpty][0];
+            c = emptyGrid[rowEmpty][1];
         }
 
-        try {Thread.sleep(5000);} catch (InterruptedException e) {System.out.println(e);}
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+        if (r >= emptyGrid.length) {
+            print();
+        } else {
+            solve(r, c);
+        }
     }
 
     /**
@@ -306,7 +335,13 @@ class SudokuSolverQuinnTests {
      */
     void solveIt() {
         // TODO 5
-        solve(0, 0);
+        for (int i = 0; i < emptyGrid.length; i++) {
+            int[] current = findEmptySquare();
+            emptyGrid[i][0] = current[1];
+            emptyGrid[i][1] = current[0];
+            System.out.println(emptyGrid[i][0] + " " + emptyGrid[i][1]);
+        }
+        solve(emptyGrid[0][0], emptyGrid[0][1]);
     }
 
     public static void main(String[] args) {
