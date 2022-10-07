@@ -6,10 +6,10 @@ import java.awt.Graphics;
  * TreeDingus draws a "tree" using a rectangle as the trunk, and circle for a
  * crown.
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Matyas Szabolcs
+ * @id 1835521
+ * @author Quinn Caris
+ * @id 1779133
  */
 class TreeDingus extends Dingus {
     private int crownRadius;

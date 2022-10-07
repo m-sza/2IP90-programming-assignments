@@ -3,12 +3,12 @@ import java.awt.Graphics;
 import java.util.Random;
 
 /**
- * Dingus represents an arbitraty shape.
+ * Dingus represents an arbitrary shape.
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Matyas Szabolcs
+ * @id 1835521
+ * @author Quinn Caris
+ * @id 1779133
  */
 abstract class Dingus {
     /**
@@ -50,6 +50,7 @@ abstract class Dingus {
         y = random.nextInt(maxY);
 
         // Initialize to a random color
+        color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
         // TODO
     }
 
