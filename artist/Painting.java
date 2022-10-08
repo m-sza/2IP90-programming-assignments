@@ -58,11 +58,14 @@ public class Painting extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(800, 450)); // make panel 800 by 450 pixels.
         // ...
     }
-
+    
     @Override
     protected void paintComponent(Graphics g) { // draw all your shapes
         super.paintComponent(g); // clears the panel
         // draw all shapes
+        for (int i = 0; i < ArrayOfDinguses.size(); i++) {
+            ((Dingus) ArrayOfDinguses.get(i)).draw(g);
+        }
         // TODO
     }
 
@@ -79,6 +82,9 @@ public class Painting extends JPanel implements ActionListener {
         }
     }
 
+    // Arraylist for Dinguses
+    ArrayList <Object> ArrayOfDinguses = new ArrayList<Object>();
+
     /**
      * Regenerate this painting.
      */
@@ -86,10 +92,11 @@ public class Painting extends JPanel implements ActionListener {
         numberOfRegenerates++; // do not change
 
         // clear the shapes list
-        // TODO
-
+        ArrayOfDinguses.clear();
         // create random shapes
-        // TODO
+        for (int i = 0; i < 20; i++) {
+            ArrayOfDinguses.add(new PineDingus(800, 450));
+        }
     }
 
     /**
