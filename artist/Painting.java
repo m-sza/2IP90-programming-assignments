@@ -63,8 +63,8 @@ public class Painting extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) { // draw all your shapes
         super.paintComponent(g); // clears the panel
         // draw all shapes
-        for (int i = 0; i < ArrayOfDinguses.size(); i++) {
-            ((Dingus) ArrayOfDinguses.get(i)).draw(g);
+        for (int i = 0; i < arrayOfDinguses.size(); i++) {
+            ((Dingus) arrayOfDinguses.get(i)).draw(g);
         }
         // TODO
     }
@@ -83,20 +83,23 @@ public class Painting extends JPanel implements ActionListener {
     }
 
     // Arraylist for Dinguses
-    ArrayList <Object> ArrayOfDinguses = new ArrayList<Object>();
+    ArrayList<Object> arrayOfDinguses = new ArrayList<Object>();
 
     /**
      * Regenerate this painting.
      */
     void regenerate() {
         numberOfRegenerates++; // do not change
+        int numberOfLoops = RANDOM.nextInt(6) + 3;
 
         // clear the shapes list
-        ArrayOfDinguses.clear();
+        arrayOfDinguses.clear();
         // create random shapes
-        for (int i = 0; i < 20; i++) {
-            ArrayOfDinguses.add(new PineDingus(800, 450));
-            ArrayOfDinguses.add(new CloudDingus(800, 450));
+        for (int i = 0; i < numberOfLoops; i++) {
+            arrayOfDinguses.add(new PineDingus(800, 450));
+            arrayOfDinguses.add(new DogDingus(1450, 600));
+            arrayOfDinguses.add(new CloudDingus(800, 450));
+            arrayOfDinguses.add(new HeptagramDingus(1300, 450));
         }
     }
 
@@ -105,7 +108,7 @@ public class Painting extends JPanel implements ActionListener {
      * 
      * DON'T CHANGE this method
      * 
-     * Note. This action will overide existing files!
+     * Note. This action will override existing files!
      *
      * @param component Component to be saved
      * @param name      filename of the screenshot, followed by a sequence number
