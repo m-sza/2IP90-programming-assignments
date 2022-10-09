@@ -43,10 +43,12 @@ class PineDingus extends Dingus {
         if (filled) {
             // more general way to draw an oval than with fillOval (hint :-)
            g.drawPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
-           g.drawPolygon(new int[] {x+(2*crownWidth/3), x+(crownWidth), x+(4*crownWidth/3)}, new int[] {y+(21*crownHeight/20), y, y+(21*crownHeight/20)}, 3);
+           g.drawPolygon(new int[] {x+(3*crownWidth/4), x+(crownWidth), x+(5*crownWidth/4)}, new int[] {y+(crownHeight), y+(1*crownHeight/3), y+(crownHeight)}, 3);
+           g.drawPolygon(new int[] {x+(9*crownWidth/10), x+(crownWidth), x+(11*crownWidth/10)}, new int[] {y+(1*crownHeight/3), y, y+(1*crownHeight/3)}, 3);
         } else {
             g.fillPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
-            g.fillPolygon(new int[] {x+(2*crownWidth/3), x+(crownWidth), x+(4*crownWidth/3)}, new int[] {y+(crownHeight), y, y+(crownHeight)}, 3);
+            g.fillPolygon(new int[] {x+(3*crownWidth/4), x+(crownWidth), x+(5*crownWidth/4)}, new int[] {y+(crownHeight)+10, y+(1*crownHeight/3), y+(crownHeight)+10}, 3);
+            g.fillPolygon(new int[] {x+(9*crownWidth/10), x+(crownWidth), x+(11*crownWidth/10)}, new int[] {y+(1*crownHeight/3)+10, y, y+(1*crownHeight/3)+10}, 3);
         }
 
         // draw trunk
