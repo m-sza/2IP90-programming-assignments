@@ -90,13 +90,24 @@ public class Painting extends JPanel implements ActionListener {
      */
     void regenerate() {
         numberOfRegenerates++; // do not change
+        Random random = Painting.RANDOM;
 
         // clear the shapes list
         ArrayOfDinguses.clear();
-        // create random shapes
-        for (int i = 0; i < 20; i++) {
-            ArrayOfDinguses.add(new PineDingus(800, 450));
+
+        // create sun
+        ArrayOfDinguses.add(new SunDingus(800, 450));
+        // create ground
+        for (int i = 0; i < random.nextInt(40)+10; i++) {
+            ArrayOfDinguses.add(new GroundDingus(800, 450));
+        }
+        // create clouds
+        for (int i = 0; i < random.nextInt(2000); i++) {
             ArrayOfDinguses.add(new CloudDingus(800, 450));
+        }
+        // create ground
+        for (int i = 0; i < random.nextInt(100); i++) {
+            ArrayOfDinguses.add(new PineDingus(800, 450));
         }
     }
 
