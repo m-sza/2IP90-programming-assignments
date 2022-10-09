@@ -96,6 +96,7 @@ public class Painting extends JPanel implements ActionListener {
         // create random shapes
         for (int i = 0; i < 20; i++) {
             ArrayOfDinguses.add(new PineDingus(800, 450));
+            ArrayOfDinguses.add(new CloudDingus(800, 450));
         }
     }
 

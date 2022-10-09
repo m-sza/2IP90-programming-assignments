@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 
 /**
  * TreeDingus is an example of a slightly more advanced Dingus.
@@ -29,8 +30,8 @@ class PineDingus extends Dingus {
         super(maxX, maxY);
 
         // initialize PineDingus properties
-        crownHeight = random.nextInt(maxX / 4);
-        crownWidth = random.nextInt(maxX / 4);
+        crownHeight = random.nextInt(maxX / 6) + 20;
+        crownWidth = random.nextInt(maxX / 6) + 20;
         trunkHeight = random.nextInt((maxY - 2 * crownWidth) / 2);
         trunkWidth = crownWidth / 3 + 1;
         filled = random.nextBoolean();
@@ -39,7 +40,9 @@ class PineDingus extends Dingus {
     @Override
     void draw(Graphics g) {
         // draw crown
-        g.setColor(color);
+        Color treeColor = new Color(random.nextInt(100), random.nextInt(150)+50, random.nextInt(100));
+        g.setColor(treeColor);
+        y = random.nextInt(maxY/2) + maxY/4;
         if (filled) {
             // more general way to draw an oval than with fillOval (hint :-)
            g.drawPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
@@ -52,7 +55,6 @@ class PineDingus extends Dingus {
         }
 
         // draw trunk
-        g.setColor(color);
         int xx = x + crownWidth - trunkWidth / 2;
         int yy = y + 2 * crownHeight;
 
