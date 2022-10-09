@@ -102,8 +102,12 @@ public class Painting extends JPanel implements ActionListener {
         for (int i = 0; i < random.nextInt(40) + 10; i++) {
             ArrayOfDinguses.add(new GroundDingus(800, 450));
         }
+        // create lakes
+        for (int i = 0; i < random.nextInt(3); i++) {
+            ArrayOfDinguses.add(new LakeDingus(800, 450));
+        }
         // create clouds
-        for (int i = 0; i < random.nextInt(2000); i++) {
+        for (int i = 0; i < random.nextInt(1000); i++) {
             ArrayOfDinguses.add(new CloudDingus(800, 450));
         }
         // create ground

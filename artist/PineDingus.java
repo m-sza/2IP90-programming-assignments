@@ -17,7 +17,6 @@ class PineDingus extends Dingus {
     private int crownWidth;
     private int trunkHeight;
     private int trunkWidth;
-    private boolean filled; // true: filled; false: outline
 
     /**
      * Create and initialize a new TreeDingus.
@@ -33,8 +32,7 @@ class PineDingus extends Dingus {
         crownHeight = random.nextInt(maxX / 6) + 20;
         crownWidth = random.nextInt(maxX / 6) + 20;
         trunkHeight = random.nextInt((maxY - 2 * crownWidth) / 2);
-        trunkWidth = crownWidth / 3 + 1;
-        filled = random.nextBoolean();
+        trunkWidth = crownWidth / 4 + 1;
     }
 
     @Override
@@ -43,25 +41,15 @@ class PineDingus extends Dingus {
         Color treeColor = new Color(random.nextInt(100), random.nextInt(150)+50, random.nextInt(100));
         g.setColor(treeColor);
         y = random.nextInt(maxY/2) + maxY/4;
-        if (filled) {
-            // more general way to draw an oval than with fillOval (hint :-)
-           g.drawPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
-           g.drawPolygon(new int[] {x+(3*crownWidth/4), x+(crownWidth), x+(5*crownWidth/4)}, new int[] {y+(crownHeight), y+(1*crownHeight/3), y+(crownHeight)}, 3);
-           g.drawPolygon(new int[] {x+(9*crownWidth/10), x+(crownWidth), x+(11*crownWidth/10)}, new int[] {y+(1*crownHeight/3), y, y+(1*crownHeight/3)}, 3);
-        } else {
-            g.fillPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
-            g.fillPolygon(new int[] {x+(3*crownWidth/4), x+(crownWidth), x+(5*crownWidth/4)}, new int[] {y+(crownHeight)+10, y+(1*crownHeight/3), y+(crownHeight)+10}, 3);
-            g.fillPolygon(new int[] {x+(9*crownWidth/10), x+(crownWidth), x+(11*crownWidth/10)}, new int[] {y+(1*crownHeight/3)+10, y, y+(1*crownHeight/3)+10}, 3);
-        }
+
+        g.fillPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
+        g.fillPolygon(new int[] {x+(3*crownWidth/4), x+(crownWidth), x+(5*crownWidth/4)}, new int[] {y+(crownHeight)+10, y+(1*crownHeight/3), y+(crownHeight)+10}, 3);
+        g.fillPolygon(new int[] {x+(9*crownWidth/10), x+(crownWidth), x+(11*crownWidth/10)}, new int[] {y+(1*crownHeight/3)+10, y, y+(1*crownHeight/3)+10}, 3);
 
         // draw trunk
         int xx = x + crownWidth - trunkWidth / 2;
         int yy = y + 2 * crownHeight;
 
-        if (filled) {
-            g.fillRect(xx, yy, trunkWidth, trunkHeight);
-        } else {
-            g.drawRect(xx, yy, trunkWidth, trunkHeight);
-        }
+        g.drawRect(xx, yy, trunkWidth, trunkHeight);
     }
 }
