@@ -1,5 +1,6 @@
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
+
 
 /**
  * TreeDingus is an example of a slightly more advanced Dingus.
@@ -38,8 +39,11 @@ class PineDingus extends Dingus {
     @Override
     void draw(Graphics g) {
         // draw crown
-        Color treeColor = new Color(random.nextInt(100), random.nextInt(150)+50, random.nextInt(100));
+        Color treeColor = new Color(random.nextInt(100), 
+            random.nextInt(150) + 50, 
+            random.nextInt(100));
         g.setColor(treeColor);
+        
         y = random.nextInt(maxY/2) + maxY/4;
 
         g.fillPolygon(new int[] {x+(crownWidth/2), x+(crownWidth), x+(3*crownWidth/2)}, new int[] {y+(2*crownHeight), y+(crownHeight), y+(2*crownHeight)}, 3);
