@@ -21,7 +21,7 @@ class DogDingus extends Dingus {
     public DogDingus(int maxX, int maxY) {
         // intialize randomly the Dingus properties, i.e., position and color
         super(maxX, maxY);
-        size = random.nextInt(3) + 1;
+        size = random.nextInt(1) + 2;
     }
 
     @Override
@@ -30,6 +30,7 @@ class DogDingus extends Dingus {
         int[] pixelGridX = new int[20];
         int[] pixelGridY = new int[19];
         int count = 0;
+        y = random.nextInt(300)+200;
         for (int i = 0; i < 20; i++) {
             pixelGridX[i] = count;
             count = count + size;

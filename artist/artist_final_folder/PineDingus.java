@@ -59,6 +59,8 @@ class PineDingus extends Dingus {
         int xx = x + crownWidth - trunkWidth / 2;
         int yy = y + 2 * crownHeight;
 
-        g.drawRect(xx, yy, trunkWidth, trunkHeight);
+        for (int i = 0; i < trunkWidth - 1; i += 5) {
+            g.drawRect(xx + i/2, yy, trunkWidth - i, trunkHeight);
+        }
     }
 }

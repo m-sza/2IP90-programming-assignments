@@ -101,6 +101,12 @@ public class Painting extends JPanel implements ActionListener {
         for (int i = 0; i < random.nextInt(40) + 10; i++) {
             arrayOfDinguses.add(new GroundDingus(800, 450));
         }
+        // create birds
+        for (int i = 0; i < random.nextInt(5)+1; i++) {
+            arrayOfDinguses.add(new BirdDingus(800, 450));
+        }
+        // create dog
+        arrayOfDinguses.add(new DogDingus(800, 450));
         // create lakes
         for (int i = 0; i < random.nextInt(3); i++) {
             arrayOfDinguses.add(new LakeDingus(800, 450));
@@ -109,7 +115,11 @@ public class Painting extends JPanel implements ActionListener {
         for (int i = 0; i < random.nextInt(1000); i++) {
             arrayOfDinguses.add(new CloudDingus(800, 450));
         }
-        // create ground
+        // create rocks
+        for (int i = 0; i < random.nextInt(5); i++) {
+            arrayOfDinguses.add(new RockDingus(800, 450));
+        }
+        // create trees
         for (int i = 0; i < random.nextInt(100); i++) {
             arrayOfDinguses.add(new PineDingus(800, 450));
         }
