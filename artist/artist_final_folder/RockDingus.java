@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 
 /**
- * SunDingus draws a singular sun at the top of the image.
+ * RockDingus draws a rock in the grassfield using an oval.
  * 
  * @author Matyas Szabolcs
  * @id 1835521
@@ -14,7 +14,7 @@ class RockDingus extends Dingus {
     private int rockSize;
 
     /**
-     * Create and initialize a new SunDingus.
+     * Create and initialize a new RockDingus.
      * 
      * @param maxX upper bound for the x coordinate of the position
      * @param maxY upper bound for the y coordinate of the position
@@ -23,17 +23,17 @@ class RockDingus extends Dingus {
         // initialize Dingus properties
         super(maxX, maxY);
 
-        // initialize SunDingus properties
+        // initialize RockDingus properties
         rockSize = random.nextInt(50) + 50;
     }
 
     @Override
     void draw(Graphics g) {
-        int c = random.nextInt(50)+75;
+        int c = random.nextInt(50) + 75;
         Color rockColor = new Color(c, c, c);
         g.setColor(rockColor);
 
-        g.fillOval(x, random.nextInt(maxY / 2)+maxY/2, rockSize, 2*rockSize/3);
+        g.fillOval(x, random.nextInt(maxY / 2) + maxY / 2, rockSize, 2 * rockSize / 3);
 
     }
 }

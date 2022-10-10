@@ -30,7 +30,7 @@ class DogDingus extends Dingus {
         int[] pixelGridX = new int[20];
         int[] pixelGridY = new int[19];
         int count = 0;
-        y = random.nextInt(300)+200;
+        y = random.nextInt(300) + 200;
         for (int i = 0; i < 20; i++) {
             pixelGridX[i] = count;
             count = count + size;

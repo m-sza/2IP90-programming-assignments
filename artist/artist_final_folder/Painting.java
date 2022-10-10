@@ -102,7 +102,7 @@ public class Painting extends JPanel implements ActionListener {
             arrayOfDinguses.add(new GroundDingus(800, 450));
         }
         // create birds
-        for (int i = 0; i < random.nextInt(5)+1; i++) {
+        for (int i = 0; i < random.nextInt(5) + 1; i++) {
             arrayOfDinguses.add(new BirdDingus(800, 450));
         }
         // create dog
