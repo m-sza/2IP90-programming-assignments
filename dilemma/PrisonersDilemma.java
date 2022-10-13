@@ -1,4 +1,6 @@
-import javax.swing.SwingUtilities;
+import java.awt.*;
+import java.awt.Color;
+import javax.swing.*;
 //...
 
 /**
@@ -8,12 +10,12 @@ import javax.swing.SwingUtilities;
  * 
  * assignment copyright Kees Huizing
  * 
- * @author Matyas Szabolcs
- * @id 1835521
- * @author Quinn Caris
- * @id 1779133
+ * @author NAME
+ * @id ID
+ * @author NAME
+ * @id ID
  */
-class PrisonersDilemma /* possible extends... */ {
+class PrisonersDilemma {
     // ...
 
     /**
@@ -21,7 +23,25 @@ class PrisonersDilemma /* possible extends... */ {
      */
     void buildGUI() {
         SwingUtilities.invokeLater(() -> {
-            // ...
+            JFrame frame = new JFrame("Ignore my inferior programming skills");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(300, 300);
+            JPanel bigPanel = new JPanel();
+            JPanel gridPanel = new JPanel();
+            JButton reset = new JButton("Reset");
+            JButton go = new JButton("Go");
+            frame.add(bigPanel);
+            bigPanel.add(gridPanel);
+            bigPanel.add(reset);
+            bigPanel.add(go);
+            for (int i = 0; i < 50; i++) {
+                for (int j = 0; j < 50; j++) {
+                    gridPanel.add(new Square(0, 0, Color.BLUE));
+                }
+            }
+            gridPanel.setBackground(Color.RED);
+            gridPanel.setLayout(new GridLayout(50, 50));
+            frame.setVisible(true);
         });
     }
 
