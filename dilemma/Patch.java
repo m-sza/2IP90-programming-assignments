@@ -6,10 +6,10 @@
  * part Patch
  * assignment copyright Kees Huizing
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Matyas Szabolcs
+ * @id 1835521
+ * @author Quinn Caris
+ * @id 1779133
  */
 class Patch {
     /**
