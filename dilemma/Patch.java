@@ -6,19 +6,21 @@
  * part Patch
  * assignment copyright Kees Huizing
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Matyas Szabolcs
+ * @id 1835521
+ * @author Quinn Caris
+ * @id 1779133
  */
 class Patch {
+
+    PlayingField playingField = new PlayingField();
+
     /**
      * Determine if this patch is cooperating.
      * 
      * @return true if and only if the patch is cooperating.
      */
     boolean isCooperating() {
-        //...
         return false; // CHANGE THIS
     }
     
@@ -28,7 +30,7 @@ class Patch {
      * @param isC use cooperation strategy.
      */
     void setCooperating(boolean isC) {
-        //...
+        
     }
     
     /**
@@ -44,7 +46,6 @@ class Patch {
      * @return the score
      */
     double getScore() {
-        //...
-        return 0.0; // CHANGE THIS
+        return 0.0; 
     }
 }

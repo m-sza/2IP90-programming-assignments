@@ -1,9 +1,7 @@
+import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-
-import java.awt.*;
-//...
 
 /**
  * Prisoners Dilemma application.
@@ -20,9 +18,6 @@ import java.awt.*;
 class PrisonersDilemma /* possible extends... */ {
     // ...
 
-    /**
-     * Build the GUI for the Prisoner's Dilemma application.
-     */
     JFrame frame;
     JTable playingField;
 
@@ -31,6 +26,10 @@ class PrisonersDilemma /* possible extends... */ {
     JButton resetButton;
     JSlider defectionAwardSlider;
 
+
+    /**
+     * Build the GUI for the Prisoner's Dilemma application.
+     */
     void buildGUI() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -77,7 +76,9 @@ class PrisonersDilemma /* possible extends... */ {
         });
     }
 
-    // ...
+    public double getAlphaFromDilemma() {
+        return defectionAwardSlider.getValue();
+    }
 
     public static void main(String[] a) {
         new PrisonersDilemma().buildGUI();

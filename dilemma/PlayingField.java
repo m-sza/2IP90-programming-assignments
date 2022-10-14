@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+
 /**
  * Playingfield.
  * 
@@ -12,10 +13,10 @@ import javax.swing.Timer;
  * 
  * assignment copyright Kees Huizing
  * 
- * @author NAME
- * @id ID
- * @author NAME
- * @id ID
+ * @author Matyas Szabolcs
+ * @id 1835521
+ * @author Quinn Caris
+ * @id 1779133
  */
 class PlayingField extends JPanel /* possible implements ... */ {
 
@@ -25,7 +26,12 @@ class PlayingField extends JPanel /* possible implements ... */ {
 
     private Timer timer;
 
-    // random number genrator
+    private int counter;
+
+
+    PrisonersDilemma prisonersDilemma = new PrisonersDilemma();
+
+    // random number generator
     private static final long SEED = 37L; // seed for random number generator; any number goes
     public static final Random RANDOM = new Random(SEED);
 
@@ -34,12 +40,126 @@ class PlayingField extends JPanel /* possible implements ... */ {
     /**
      * Calculate and execute one step in the simulation.
      */
-    public void step () {
-        // ...
+    public void step() {
+        boolean[][] prisonGrid = getGrid();
+    }
+
+    /**
+     * Determines the coordinates of the neighbours of the given patch.
+     * 
+     * @param x coordinate
+     * @param y coordinate
+     * @return neighbour coordinates
+     */
+    public int[] neighbour(int x, int y) {
+        int[] neighbour = new int[2];
+        if (counter == 8) {
+            counter = 0;
+        }
+        //ignore this haha
+        if (counter == 0) {
+            //top
+            if (y == 0) {
+                neighbour[0] = x;
+                neighbour[1] = grid.length - 1;
+            } else {
+                neighbour[0] = x;
+                neighbour[1] = y - 1;
+            }
+        } else if (counter == 1) {
+            //top-right
+            if (x == grid[0].length - 1 && y == 0) {
+                neighbour[0] = 0;
+                neighbour[1] = grid.length - 1;
+            } else if (y == 0) {
+                neighbour[0] = x + 1;
+                neighbour[1] = grid.length - 1;
+            } else if (x == grid[0].length - 1) {
+                neighbour[0] = 0;
+                neighbour[1] = y - 1;
+            } else {
+                neighbour[0] = x + 1;
+                neighbour[1] = y - 1;
+            }
+        } else if (counter == 2) {
+            //right
+            if (x == grid[0].length - 1) {
+                neighbour[0] = 0;
+                neighbour[1] = y;
+            } else {
+                neighbour[0] = x + 1;
+                neighbour[1] = y;
+            }
+        } else if (counter == 3) {
+            //bottom-right
+            if (x == grid[0].length - 1 && y == grid.length - 1) {
+                neighbour[0] = 0;
+                neighbour[1] = 0;
+            } else if (x == grid[0].length - 1) {
+                neighbour[0] = 0;
+                neighbour[1] = y + 1;
+            } else if (y == grid.length - 1) {
+                neighbour[0] = x + 1;
+                neighbour[1] = 0;
+            } else {
+                neighbour[0] = x + 1;
+                neighbour[1] = y + 1;
+            }
+        } else if (counter == 4) {
+            //bottom
+            if (y == grid.length - 1) {
+                neighbour[0] = x;
+                neighbour[1] = 0;
+            } else {
+                neighbour[0] = x;
+                neighbour[1] = y + 1;
+            }
+        } else if (counter == 5) {
+            //bottom-left
+            if (x == 0 && y == grid.length - 1) {
+                neighbour[0] = grid[0].length - 1;
+                neighbour[1] = 0;
+            } else if (x == 0) {
+                neighbour[0] = grid[0].length - 1;
+                neighbour[1] = y + 1;
+            } else if (y == grid.length - 1) {
+                neighbour[0] = x - 1;
+                neighbour[1] = 0;
+            } else {
+                neighbour[0] = x - 1;
+                neighbour[1] = y + 1;
+            }
+        } else if (counter == 6) {
+            //left
+            if (x == 0) {
+                neighbour[0] = grid[0].length - 1;
+                neighbour[1] = y;
+            } else {
+                neighbour[0] = x - 1;
+                neighbour[1] = y;
+            }
+        } else if (counter == 7) {
+            //top-left
+            if (x == 0 && y == 0) {
+                neighbour[0] = grid[0].length - 1;
+                neighbour[1] = grid.length - 1;
+            } else if (x == 0) {
+                neighbour[0] = grid[0].length - 1;
+                neighbour[1] = y - 1;
+            } else if (y == 0) {
+                neighbour[0] = x - 1;
+                neighbour[1] = grid.length - 1;
+            } else {
+                neighbour[0] = x - 1;
+                neighbour[1] = y - 1;
+            }
+        }
+        counter++;
+        return neighbour;
     }
 
     public void setAlpha(double alpha) {
-        // ...
+        alpha = getAlpha();
     }
 
     /**
@@ -48,8 +168,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * @return alpha value for this field.
      */
     public double getAlpha() {
-        // ...
-        return 0.0; // CHANGE THIS
+        return prisonersDilemma.getAlphaFromDilemma();
     }
 
     /**
@@ -66,18 +185,25 @@ class PlayingField extends JPanel /* possible implements ... */ {
                 resultGrid[x][y] = grid[x][y].isCooperating();
             }
         }
-
         return resultGrid;
     }
 
     /**
      * Set this fields grid.
      * 
-     * All patches in the grid become cooperating is the corresponding item in inGrid is true.
+     * All patches in the grid become cooperating if the corresponding item in inGrid is true.
      * 
      * @param inGrid 2D array, with true for cooperators and false for defectors.
      */
     public void setGrid(boolean[][] inGrid) {
-        // ...
+        for (int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid[0].length; y++) {
+                if (inGrid[x][y] && !grid[x][y].isCooperating()) {
+                    grid[x][y].toggleStrategy();
+                } else if (!inGrid[x][y] && grid[x][y].isCooperating()) {
+                    grid[x][y].toggleStrategy();
+                }
+            }
+        }
     }
 }
