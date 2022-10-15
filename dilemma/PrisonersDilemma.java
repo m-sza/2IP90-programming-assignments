@@ -1,7 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import java.awt.geom.*;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * Prisoners Dilemma application.
@@ -19,13 +22,12 @@ class PrisonersDilemma /* possible extends... */ {
     // ...
 
     JFrame frame;
-    JTable playingField;
-
+    JPanel playingField;
+    JPanel patch;
     JPanel buttonPanel;
     JButton goButton;
     JButton resetButton;
     JSlider defectionAwardSlider;
-
 
     /**
      * Build the GUI for the Prisoner's Dilemma application.
@@ -35,43 +37,54 @@ class PrisonersDilemma /* possible extends... */ {
             @Override
             public void run() {
                 frame = new JFrame("Prisoners Dilemma");
-                frame.setSize(800, 785);
+                frame.setSize(700, 756);
                 frame.setResizable(false);
 
-                DefaultTableModel model = new DefaultTableModel(50, 50);
-
                 // add playingField
-                playingField = new JTable(model);
-                playingField.setLayout(new BoxLayout(playingField, BoxLayout.LINE_AXIS));
-                playingField.setBackground(Color.blue);
-                TableColumnModel columnModel = playingField.getColumnModel();
+                playingField = new JPanel(new GridLayout(50, 50));
+                playingField.setBackground(Color.black);
+                frame.add(playingField);
+
+                JPanel[][] patches = new JPanel[50][50];
                 for (int i = 0; i < 50; i++) {
-                    playingField.setRowHeight(i, 14);
-                    columnModel.getColumn(i).setPreferredWidth(10);
+                    for (int j = 0; j < 50; j++) {
+                        JPanel label = new JPanel();
+                    
+                        label.setBackground(new Color(255-(i+j)*2,(i)*4,255-(j)*4));
+                        label.setOpaque(true);
+                        if (i==0 && j == 0) {
+                            label.setBackground(new Color(255,255,255));
+                        }
+
+                        //try {Thread.sleep(250);} catch (InterruptedException e) {System.out.println(e);}
+
+                        playingField.add(label);
+                        patches[j][i] = label;
+                    }
                 }
-                playingField.setPreferredSize(new Dimension(600, 700));
-                frame.add(playingField, BorderLayout.NORTH);
+
+                patches[20][20].setBackground(new Color(255,255,255));
 
                 // add buttonPanel
                 buttonPanel = new JPanel(new BorderLayout());
                 buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
-                buttonPanel.setBackground(Color.black);
-                buttonPanel.setPreferredSize(new Dimension(100, 50));
+                buttonPanel.setPreferredSize(new Dimension(100, 40));
                 frame.add(buttonPanel, BorderLayout.SOUTH);
-                // add resetButton
-                resetButton = new JButton("RESET");
-                resetButton.setPreferredSize(new Dimension(100, 50));
-                buttonPanel.add(resetButton, BorderLayout.WEST);
-                // add defectionAwardSlider
-                defectionAwardSlider = new JSlider(0);
-                defectionAwardSlider.setPreferredSize(new Dimension(100, 50));
-                buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
-                // add goButton
-                goButton = new JButton("GO");
-                goButton.setPreferredSize(new Dimension(100, 50));
-                buttonPanel.add(goButton, BorderLayout.EAST);
+                    // add resetButton
+                    resetButton = new JButton("RESET");
+                    //resetButton.setSize(new Dimension(100, 50));
+                    buttonPanel.add(resetButton, BorderLayout.WEST);
+                    // add defectionAwardSlider
+                    defectionAwardSlider = new JSlider(0);
+                    //defectionAwardSlider.setPreferredSize(new Dimension(100, 50));
+                    buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
+                    // add goButton
+                    goButton = new JButton("GO");
+                    //goButton.setPreferredSize(new Dimension(100, 50));
+                    buttonPanel.add(goButton, BorderLayout.EAST);
 
                 frame.setVisible(true);
+
             }
         });
     }
