@@ -20,7 +20,7 @@ import javax.swing.Timer;
  */
 class PlayingField extends JPanel /* possible implements ... */ {
 
-    private Patch[][] grid;
+    private Patch[][] grid = new Patch[50][50];
 
     private double alpha; // defection award factor
 
@@ -275,4 +275,6 @@ class PlayingField extends JPanel /* possible implements ... */ {
             }
         }
     }
+    
+    
 }
