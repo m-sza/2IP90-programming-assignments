@@ -41,7 +41,13 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * Calculate and execute one step in the simulation.
      */
     public void step() {
-        boolean[][] prisonGrid = getGrid();
+        for (int y = 0; y < grid.length - 1; y++) {
+            for (int x = 0; x < grid[0].length - 1; x++) {
+                if (changeStrategy(x, y)) {
+                    grid[y][x].toggleStrategy();
+                }
+            }
+        }
     }
 
     /**
@@ -158,12 +164,75 @@ class PlayingField extends JPanel /* possible implements ... */ {
         return neighbour;
     }
 
+    /**
+     * Calculates the score of a Patch.
+     * @param x coordinate
+     * @param y coordinate
+     * @return score
+     */
+    public double scoreCalc(int x, int y, double alpha) {
+        double score = 0.0;
+        for (int n = 0; n < 8; n++) {
+            int[] neighbour = neighbour(x, y);
+            if (grid[neighbour[1]][neighbour[0]].isCooperating() 
+                && grid[y][x].isCooperating()) {
+                score++;
+            } else if (grid[neighbour[1]][neighbour[0]].isCooperating() 
+                && !grid[y][x].isCooperating()) {
+                score = score + alpha;
+            }
+        }
+        return score;
+    }
+
+    /**
+     * Calculates the score of the entire grid.
+     * @return a 2D array of all the scores throughout the entire grid
+     */
+    public double[][] scoreGrid() {
+        double[][] scoreGrid = new double[grid.length][grid[0].length];
+        for (int y = 0; y < grid.length - 1; y++) {
+            for (int x = 0; x < grid[0].length - 1; x++) {
+                scoreGrid[y][x] = scoreCalc(x, y, alpha);
+            }
+        }
+        return scoreGrid;
+    }
+
+    /**
+     * Determines whether the given Patch should change their strategy or not.
+     * @param x coordinate
+     * @param y coordinate
+     * @param score of the patch
+     * @return true if it should change, false if not
+     */
+    public boolean changeStrategy(int x, int y) {
+        double[][] scoreGrid = scoreGrid();
+        double highestScore = 0.0;
+        int[] highestNeighbour = new int[2];
+        int[] neighbour = new int[2];
+        for (int n = 0; n < 8; n++) {
+            neighbour = neighbour(x, y);
+            if (scoreGrid[neighbour[1]][neighbour[0]] > highestScore) {
+                highestScore = scoreGrid[neighbour[1]][neighbour[0]];
+                highestNeighbour = neighbour;
+            }
+        }
+        if (highestScore > scoreGrid[y][x]) {
+            if (grid[y][x].isCooperating() 
+                != grid[highestNeighbour[1]][highestNeighbour[0]].isCooperating()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setAlpha(double alpha) {
         alpha = getAlpha();
     }
 
     /**
-     * Alpha of this playing field..
+     * Alpha of this playing field.
      * 
      * @return alpha value for this field.
      */

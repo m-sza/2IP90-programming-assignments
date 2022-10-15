@@ -21,7 +21,8 @@ class Patch {
      * @return true if and only if the patch is cooperating.
      */
     boolean isCooperating() {
-        return false; // CHANGE THIS
+        //should be implemented somewhere in the future, but I don't know how
+        return false;
     }
     
     /**
@@ -30,14 +31,15 @@ class Patch {
      * @param isC use cooperation strategy.
      */
     void setCooperating(boolean isC) {
-        
+        //not necessary (yet)
     }
     
     /**
      * Toggle strategy between C and D.
      */
     void toggleStrategy() {
-        // ...
+        //should be implemented as well for the other code to work,
+        //but I've got no clue how to do that
     }
     
     /**
@@ -46,6 +48,7 @@ class Patch {
      * @return the score
      */
     double getScore() {
+        //this function is no longer needed since it has been done in PlayingField.java
         return 0.0; 
     }
 }
