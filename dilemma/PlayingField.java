@@ -20,7 +20,7 @@ import javax.swing.Timer;
  */
 class PlayingField extends JPanel /* possible implements ... */ {
 
-    private Patch[][] grid = new Patch[50][50];
+    public Patch[][] grid = new Patch[50][50];
 
     private double alpha; // defection award factor
 
@@ -35,7 +35,19 @@ class PlayingField extends JPanel /* possible implements ... */ {
     private static final long SEED = 37L; // seed for random number generator; any number goes
     public static final Random RANDOM = new Random(SEED);
 
-    // ...
+
+    /**
+     * Initializes a grid of random patch strategies.
+     */
+    public void setInitialGrid() {
+        // doesn't work either because the grid location is null
+        for (int y = 0; y < 50; y++) {
+            for (int x = 0; x < 50; x++) {
+                grid[y][x].randomizePatch();
+            }
+        }
+    }
+
 
     /**
      * Calculate and execute one step in the simulation.

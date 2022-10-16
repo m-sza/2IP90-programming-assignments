@@ -34,19 +34,20 @@ class PrisonersDilemma /* possible extends... */ {
     JButton resetButton;
     JSlider defectionAwardSlider;
 
-    
-    public void setInitialGrid() {
+    /**
+     * Shows the colours for the GUI.
+     */
+    public void initialGrid() {
         for (int x = 0; x < 50; x++) {
             for (int y = 0; y < 50; y++) {
-                System.out.println(x + "" + y);
-                boolean isCooperating = PlayingField.RANDOM.nextBoolean();
-                System.out.println(isCooperating);
-                if (isCooperating) {
-                    patches[x][y].setBackground(new Color(255,255,255));
-                }
-                else {
-                    patches[x][y].setBackground(new Color(0, 0, 0));
-                }
+                // System.out.println(x + "" + y);
+                // boolean isCooperating = PlayingField.RANDOM.nextBoolean();
+                // System.out.println(isCooperating);
+                // if (PlayingField.grid[y][x].isCooperating()) {
+                //     patches[x][y].setBackground(new Color(255, 255, 255));
+                // } else {
+                //     patches[x][y].setBackground(new Color(0, 0, 0));
+                // }
             }
         }
     }
@@ -76,7 +77,7 @@ class PrisonersDilemma /* possible extends... */ {
                             patches[j][i] = patch;
                         }
                     }
-                    patches[20][20].setBackground(new Color(255,255,255));
+                    patches[20][20].setBackground(new Color(255, 255, 255));
                 // add buttonPanel
                 buttonPanel = new JPanel(new BorderLayout());
                 buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -107,7 +108,8 @@ class PrisonersDilemma /* possible extends... */ {
     public static void main(String[] a) throws InterruptedException {
         new PrisonersDilemma().buildGUI();
 
-        new PrisonersDilemma().setInitialGrid();
+        new PlayingField().setInitialGrid();
+
 
         /*
         // step once every second (not yet implemented)

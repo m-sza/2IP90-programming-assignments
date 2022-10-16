@@ -15,14 +15,15 @@ class Patch {
 
     PlayingField playingField = new PlayingField();
 
+    boolean strategy = false; //true if cooperating, false if defect
+
     /**
      * Determine if this patch is cooperating.
      * 
      * @return true if and only if the patch is cooperating.
      */
     boolean isCooperating() {
-        //should be implemented somewhere in the future, but I don't know how
-        return false;
+        return this.strategy;
     }
     
     /**
@@ -32,14 +33,18 @@ class Patch {
      */
     void setCooperating(boolean isC) {
         //not necessary (yet)
+        if (isC) {
+            this.strategy = true;
+        } else {
+            this.strategy = false;
+        }
     }
     
     /**
      * Toggle strategy between C and D.
      */
     void toggleStrategy() {
-        //should be implemented as well for the other code to work,
-        //but I've got no clue how to do that
+        this.strategy = !strategy;
     }
     
     /**
@@ -50,5 +55,17 @@ class Patch {
     double getScore() {
         //this function is no longer needed since it has been done in PlayingField.java
         return 0.0; 
+    }
+
+    /**
+     * Randomizes one patch for the initialization of the grid.
+     */
+    void randomizePatch() {
+        int test = PlayingField.RANDOM.nextInt(100);
+        boolean random = false;
+        if (test < 50) {
+            random = true;
+        }
+        this.strategy = random;
     }
 }
