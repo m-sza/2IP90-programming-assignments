@@ -4,12 +4,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import java.awt.geom.*;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.Timer;
 import java.util.Random;
+import javax.swing.event.*;
 
 /**
  * Prisoners Dilemma application.
@@ -85,16 +87,38 @@ class PrisonersDilemma /* possible extends... */ {
                 frame.add(buttonPanel, BorderLayout.SOUTH);
                     // add resetButton
                     resetButton = new JButton("RESET");
-                    //resetButton.setSize(new Dimension(100, 50));
+                    resetButton.setPreferredSize(new Dimension(100, 40));
                     buttonPanel.add(resetButton, BorderLayout.WEST);
+                    resetButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // reset game
+                        }
+                    });
                     // add defectionAwardSlider
                     defectionAwardSlider = new JSlider(0);
-                    //defectionAwardSlider.setPreferredSize(new Dimension(100, 50));
                     buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
+                    defectionAwardSlider.addChangeListener(new ChangeListener() {
+                        public void stateChanged(ChangeEvent e) {
+                          System.out.println("defectionAward: " + Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0);
+                          new PlayingField().alpha = Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0;
+                        }
+                    });
                     // add goButton
                     goButton = new JButton("GO");
-                    //goButton.setPreferredSize(new Dimension(100, 50));
+                    goButton.setPreferredSize(new Dimension(100, 40));
                     buttonPanel.add(goButton, BorderLayout.EAST);
+                    goButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            if (goButton.getText() == "GO") {
+                                goButton.setText("PAUSE");
+                            }
+                            else {
+                                goButton.setText("GO");
+                            }
+                        }
+                    });
 
                 frame.setVisible(true);
             }

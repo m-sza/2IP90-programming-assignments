@@ -22,7 +22,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
 
     public Patch[][] grid = new Patch[50][50];
 
-    private double alpha; // defection award factor
+    double alpha; // defection award factor
 
     private Timer timer;
 
@@ -61,6 +61,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
             }
         }
     }
+
 
     /**
      * Determines the coordinates of the neighbours of the given patch.
