@@ -1,17 +1,17 @@
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
+import java.awt.geom.*;
+import java.awt.geom.RoundRectangle2D;
+import java.util.Random;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.border.*;
+import javax.swing.event.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import java.awt.geom.*;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.Timer;
-import java.util.Random;
-import javax.swing.event.*;
 
 /**
  * Prisoners Dilemma application.
@@ -100,8 +100,10 @@ class PrisonersDilemma /* possible extends... */ {
                     buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
                     defectionAwardSlider.addChangeListener(new ChangeListener() {
                         public void stateChanged(ChangeEvent e) {
-                          System.out.println("defectionAward: " + Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0);
-                          new PlayingField().alpha = Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0;
+                            System.out.println("defectionAward: " 
+                                + Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0);
+                                new PlayingField().alpha = Math.round(
+                                    defectionAwardSlider.getValue() * 0.3) / 10.0;
                         }
                     });
                     // add goButton
@@ -113,8 +115,7 @@ class PrisonersDilemma /* possible extends... */ {
                         public void actionPerformed(ActionEvent e) {
                             if (goButton.getText() == "GO") {
                                 goButton.setText("PAUSE");
-                            }
-                            else {
+                            } else {
                                 goButton.setText("GO");
                             }
                         }
@@ -126,25 +127,30 @@ class PrisonersDilemma /* possible extends... */ {
     }
 
     public double getAlphaFromDilemma() {
-        return defectionAwardSlider.getValue();
+        return defectionAwardSlider.getValue() * 0.3 / 10.0;
     }
 
     public static void main(String[] a) throws InterruptedException {
-        new PrisonersDilemma().buildGUI();
-
         new PlayingField().setInitialGrid();
 
+        new PrisonersDilemma().buildGUI();
 
-        /*
-        // step once every second (not yet implemented)
-        ActionListener task = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                // step()?
+        while (true) {
+            // step once every second (not yet implemented)
+            ActionListener task = new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    new PlayingField().setAlpha();
+                    new PlayingField().step();
+                }
+            };
+            // Timer timer = new Timer(100, task);
+            // timer.start();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(e);
             }
-        };
-        Timer timer = new Timer(100 ,task);
-        timer.start();
-        */
+        }
 
     }
 }

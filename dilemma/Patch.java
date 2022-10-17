@@ -13,8 +13,6 @@
  */
 class Patch {
 
-    PlayingField playingField = new PlayingField();
-
     boolean strategy = false; //true if cooperating, false if defect
 
     /**
@@ -61,11 +59,11 @@ class Patch {
      * Randomizes one patch for the initialization of the grid.
      */
     void randomizePatch() {
-        int test = PlayingField.RANDOM.nextInt(100);
-        boolean random = false;
-        if (test < 50) {
-            random = true;
+        int randomInt = PlayingField.RANDOM.nextInt(100);
+        boolean randombool = false;
+        if (randomInt < 50) {
+            randombool = true;
         }
-        this.strategy = random;
+        this.strategy = randombool;
     }
 }

@@ -40,7 +40,11 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * Initializes a grid of random patch strategies.
      */
     public void setInitialGrid() {
-        // doesn't work either because the grid location is null
+        for (int y = 0; y < 50; y++) {
+            for (int x = 0; x < 50; x++) {
+                grid[y][x] = new Patch();
+            }
+        }
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 50; x++) {
                 grid[y][x].randomizePatch();
@@ -75,7 +79,6 @@ class PlayingField extends JPanel /* possible implements ... */ {
         if (counter == 8) {
             counter = 0;
         }
-        //ignore this haha
         if (counter == 0) {
             //top
             if (y == 0) {
@@ -240,7 +243,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
         return false;
     }
 
-    public void setAlpha(double alpha) {
+    public void setAlpha() {
         alpha = getAlpha();
     }
 
