@@ -59,9 +59,8 @@ class Patch {
      * Randomizes one patch for the initialization of the grid.
      */
     void randomizePatch() {
-        int randomInt = PlayingField.RANDOM.nextInt(100);
         boolean randombool = false;
-        if (randomInt < 50) {
+        if (PlayingField.RANDOM.nextInt(100) < 50) {
             randombool = true;
         }
         this.strategy = randombool;

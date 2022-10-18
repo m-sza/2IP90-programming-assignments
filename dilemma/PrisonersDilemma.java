@@ -96,14 +96,13 @@ class PrisonersDilemma /* possible extends... */ {
                         }
                     });
                     // add defectionAwardSlider
-                    defectionAwardSlider = new JSlider(0);
+                    defectionAwardSlider = new JSlider(0, 30);
                     buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
                     defectionAwardSlider.addChangeListener(new ChangeListener() {
                         public void stateChanged(ChangeEvent e) {
-                            System.out.println("defectionAward: " 
-                                + Math.round(defectionAwardSlider.getValue() * 0.3) / 10.0);
-                                new PlayingField().alpha = Math.round(
-                                    defectionAwardSlider.getValue() * 0.3) / 10.0;
+                            defectionAwardSlider.setValue(Math.round(defectionAwardSlider.getValue())); //snapping
+                            System.out.println("defectionAward: " + defectionAwardSlider.getValue() / 10.0);
+                            new PlayingField().alpha = defectionAwardSlider.getValue() / 10.0;
                         }
                     });
                     // add goButton

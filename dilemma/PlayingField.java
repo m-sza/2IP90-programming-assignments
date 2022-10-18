@@ -43,6 +43,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 50; x++) {
                 grid[y][x] = new Patch();
+                System.out.println(grid[y][x]);
             }
         }
         for (int y = 0; y < 50; y++) {
