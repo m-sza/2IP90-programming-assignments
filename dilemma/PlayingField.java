@@ -208,8 +208,8 @@ class PlayingField extends JPanel /* possible implements ... */ {
      */
     public double[][] scoreGrid() {
         double[][] scoreGrid = new double[grid.length][grid[0].length];
-        for (int y = 0; y < grid.length - 1; y++) {
-            for (int x = 0; x < grid[0].length - 1; x++) {
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid[0].length; x++) {
                 scoreGrid[y][x] = scoreCalc(x, y, alpha);
             }
         }
@@ -282,6 +282,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * @param inGrid 2D array, with true for cooperators and false for defectors.
      */
     public void setGrid(boolean[][] inGrid) {
+        //already implemented in the step() function
         for (int x = 0; x < grid.length; x++) {
             for (int y = 0; y < grid[0].length; y++) {
                 if (inGrid[x][y] && !grid[x][y].isCooperating()) {
