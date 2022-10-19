@@ -22,14 +22,11 @@ class PlayingField extends JPanel /* possible implements ... */ {
 
     public Patch[][] grid = new Patch[50][50];
 
-    double alpha; // defection award factor
+    double alpha = 1.3; // defection award factor
 
     private Timer timer;
 
     private int counter;
-
-
-    PrisonersDilemma prisonersDilemma = new PrisonersDilemma();
 
     // random number generator
     private static final long SEED = 37L; // seed for random number generator; any number goes
@@ -43,7 +40,6 @@ class PlayingField extends JPanel /* possible implements ... */ {
         for (int y = 0; y < 50; y++) {
             for (int x = 0; x < 50; x++) {
                 grid[y][x] = new Patch();
-                System.out.println(grid[y][x]);
             }
         }
         for (int y = 0; y < 50; y++) {
@@ -58,8 +54,8 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * Calculate and execute one step in the simulation.
      */
     public void step() {
-        for (int y = 0; y < grid.length - 1; y++) {
-            for (int x = 0; x < grid[0].length - 1; x++) {
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid[0].length; x++) {
                 if (changeStrategy(x, y)) {
                     grid[y][x].toggleStrategy();
                 }
@@ -235,11 +231,9 @@ class PlayingField extends JPanel /* possible implements ... */ {
                 highestNeighbour = neighbour;
             }
         }
-        if (highestScore > scoreGrid[y][x]) {
-            if (grid[y][x].isCooperating() 
-                != grid[highestNeighbour[1]][highestNeighbour[0]].isCooperating()) {
-                return true;
-            }
+        if (grid[y][x].isCooperating() 
+            != grid[highestNeighbour[1]][highestNeighbour[0]].isCooperating()) {
+            return true;
         }
         return false;
     }
@@ -254,7 +248,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
      * @return alpha value for this field.
      */
     public double getAlpha() {
-        return prisonersDilemma.getAlphaFromDilemma();
+        return PrisonersDilemma.getAlphaFromDilemma();
     }
 
     /**
@@ -293,6 +287,4 @@ class PlayingField extends JPanel /* possible implements ... */ {
             }
         }
     }
-    
-    
 }

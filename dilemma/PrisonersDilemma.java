@@ -34,7 +34,10 @@ class PrisonersDilemma /* possible extends... */ {
     JPanel buttonPanel;
     JButton goButton;
     JButton resetButton;
-    JSlider defectionAwardSlider;
+    static JSlider defectionAwardSlider;
+    boolean go = false;
+
+    PlayingField playingField = new PlayingField();
 
     /**
      * Shows the colours for the GUI.
@@ -79,7 +82,6 @@ class PrisonersDilemma /* possible extends... */ {
                             patches[j][i] = patch;
                         }
                     }
-                    patches[20][20].setBackground(new Color(255, 255, 255));
                 // add buttonPanel
                 buttonPanel = new JPanel(new BorderLayout());
                 buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -102,7 +104,7 @@ class PrisonersDilemma /* possible extends... */ {
                         public void stateChanged(ChangeEvent e) {
                             defectionAwardSlider.setValue(Math.round(defectionAwardSlider.getValue())); //snapping
                             System.out.println("defectionAward: " + defectionAwardSlider.getValue() / 10.0);
-                            new PlayingField().alpha = defectionAwardSlider.getValue() / 10.0;
+                            playingField.alpha = defectionAwardSlider.getValue() / 10.0;
                         }
                     });
                     // add goButton
@@ -114,42 +116,64 @@ class PrisonersDilemma /* possible extends... */ {
                         public void actionPerformed(ActionEvent e) {
                             if (goButton.getText() == "GO") {
                                 goButton.setText("PAUSE");
+                                go = true;
                             } else {
                                 goButton.setText("GO");
+                                go = false;
                             }
                         }
                     });
-
                 frame.setVisible(true);
+                for (int y = 0; y < 50; y++) {
+                    for (int x = 0; x < 50; x++) {
+                        if (playingField.grid[y][x].isCooperating()) {
+                            patches[y][x].setBackground(new Color(0, 0, 255));
+                        } else {
+                            patches[y][x].setBackground(new Color(255, 0, 0));
+                        }
+                    }
+                }
             }
         });
     }
 
-    public double getAlphaFromDilemma() {
+    public static double getAlphaFromDilemma() {
         return defectionAwardSlider.getValue() * 0.3 / 10.0;
     }
 
-    public static void main(String[] a) throws InterruptedException {
-        new PlayingField().setInitialGrid();
-
-        new PrisonersDilemma().buildGUI();
-
+    public void loop() {
         while (true) {
-            // step once every second (not yet implemented)
-            ActionListener task = new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    new PlayingField().setAlpha();
-                    new PlayingField().step();
+            // Don't delete this print statement, for some reason it breaks the code
+            System.out.println("");
+            if (go) {
+                playingField.step();
+                for (int y = 0; y < 50; y++) {
+                    for (int x = 0; x < 50; x++) {
+                        if (playingField.grid[y][x].isCooperating()) {
+                            patches[y][x].setBackground(new Color(0, 0, 255));
+                        } else {
+                            patches[y][x].setBackground(new Color(255, 0, 0));
+                        }
+                    }
                 }
-            };
-            // Timer timer = new Timer(100, task);
-            // timer.start();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println(e);
+                // Timer timer = new Timer(100, task);
+                // timer.start();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
             }
         }
+    }
 
+    public static void main(String[] a) throws InterruptedException {
+        new PrisonersDilemma().runMain();
+    }
+
+    public void runMain() {
+        playingField.setInitialGrid();
+        this.buildGUI();
+        this.loop();
     }
 }
