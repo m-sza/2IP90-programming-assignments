@@ -1,17 +1,9 @@
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.*;
-import java.awt.geom.RoundRectangle2D;
-import java.util.Random;
 import javax.swing.*;
-import javax.swing.Timer;
-import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 /**
  * Prisoners Dilemma application.
@@ -38,24 +30,6 @@ class PrisonersDilemma /* possible extends... */ {
     boolean go = false;
 
     PlayingField playingField = new PlayingField();
-
-    /**
-     * Shows the colours for the GUI.
-     */
-    public void initialGrid() {
-        for (int x = 0; x < 50; x++) {
-            for (int y = 0; y < 50; y++) {
-                // System.out.println(x + "" + y);
-                // boolean isCooperating = PlayingField.RANDOM.nextBoolean();
-                // System.out.println(isCooperating);
-                // if (PlayingField.grid[y][x].isCooperating()) {
-                //     patches[x][y].setBackground(new Color(255, 255, 255));
-                // } else {
-                //     patches[x][y].setBackground(new Color(0, 0, 0));
-                // }
-            }
-        }
-    }
 
     /**
      * Build the GUI for the Prisoner's Dilemma application.
@@ -102,8 +76,10 @@ class PrisonersDilemma /* possible extends... */ {
                     buttonPanel.add(defectionAwardSlider, BorderLayout.NORTH);
                     defectionAwardSlider.addChangeListener(new ChangeListener() {
                         public void stateChanged(ChangeEvent e) {
-                            defectionAwardSlider.setValue(Math.round(defectionAwardSlider.getValue())); //snapping
-                            System.out.println("defectionAward: " + defectionAwardSlider.getValue() / 10.0);
+                            defectionAwardSlider.setValue(
+                                    Math.round(defectionAwardSlider.getValue())); //snapping
+                            System.out.println(
+                                "defectionAward: " + defectionAwardSlider.getValue() / 10.0);
                             playingField.alpha = defectionAwardSlider.getValue() / 10.0;
                         }
                     });
@@ -141,11 +117,15 @@ class PrisonersDilemma /* possible extends... */ {
         return defectionAwardSlider.getValue() * 0.3 / 10.0;
     }
 
+    /**
+     * Defines the loop the simulation goes through when go is true.
+     */
     public void loop() {
         while (true) {
             // Don't delete this print statement, for some reason it breaks the code
             System.out.println("");
             if (go) {
+                //playingField.setAlpha();
                 playingField.step();
                 for (int y = 0; y < 50; y++) {
                     for (int x = 0; x < 50; x++) {
@@ -156,8 +136,6 @@ class PrisonersDilemma /* possible extends... */ {
                         }
                     }
                 }
-                // Timer timer = new Timer(100, task);
-                // timer.start();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -171,6 +149,9 @@ class PrisonersDilemma /* possible extends... */ {
         new PrisonersDilemma().runMain();
     }
 
+    /**
+     * Main run method.
+     */
     public void runMain() {
         playingField.setInitialGrid();
         this.buildGUI();

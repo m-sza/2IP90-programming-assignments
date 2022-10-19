@@ -1,7 +1,5 @@
 import java.util.Random;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
 
 
 /**
@@ -22,9 +20,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
 
     public Patch[][] grid = new Patch[50][50];
 
-    double alpha = 1.3; // defection award factor
-
-    private Timer timer;
+    double alpha = 1.5; // defection award factor
 
     private int counter;
 
@@ -239,7 +235,7 @@ class PlayingField extends JPanel /* possible implements ... */ {
     }
 
     public void setAlpha() {
-        alpha = getAlpha();
+        this.alpha = getAlpha();
     }
 
     /**
